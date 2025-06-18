@@ -13,10 +13,7 @@ func init() {
 
 	// CORS configuration
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{
-		"http://localhost:5173",  // Vue.js dev server
-		"https://transfiguration1-hup57qn9s-ohms-projects-4b3e1e96.vercel.app", // Production frontend
-	}
+	config.AllowAllOrigins = true  // Allow all origins for testing
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
 	config.AllowCredentials = true
