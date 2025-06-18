@@ -13,12 +13,26 @@ func init() {
 
 	// CORS configuration
 	config := cors.DefaultConfig()
-	config.AllowAllOrigins = true  // Allow all origins for testing
+	config.AllowAllOrigins = true
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
-	config.AllowHeaders = []string{"Origin", "Content-Type", "Accept", "Authorization"}
-	config.AllowCredentials = true
+	config.AllowHeaders = []string{
+		"Origin",
+		"Content-Type",
+		"Accept",
+		"Authorization",
+		"X-Requested-With",
+		"Access-Control-Request-Method",
+		"Access-Control-Request-Headers",
+	}
 	config.ExposeHeaders = []string{"Content-Length"}
+	config.AllowCredentials = true
+	config.MaxAge = 12 * 60 * 60 // 12 hours
 	r.Use(cors.New(config))
+
+	// Add OPTIONS handler for preflight requests
+	r.OPTIONS("/api/login", func(c *gin.Context) {
+		c.Status(http.StatusOK)
+	})
 
 	// Routes
 	r.POST("/api/login", handleLogin)
