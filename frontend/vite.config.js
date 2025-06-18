@@ -10,7 +10,7 @@ export default defineConfig(({ command }) => ({
     proxy: {
       '/api': {
         target: command === 'build' 
-          ? 'https://backend-ifp88by28-ohms-projects-4b3e1e96.vercel.app'
+          ? 'https://backend-xohmlnwza-2149-ohms-projects-4b3e1e96.vercel.app'
           : 'http://localhost:8080',
         changeOrigin: true,
         secure: true,
