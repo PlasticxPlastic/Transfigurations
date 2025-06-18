@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
 	"github.com/transfiguration/internal/database"
@@ -17,15 +18,24 @@ func main() {
 
 	// CORS configuration
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:5173"} // Vue.js dev server
+	config.AllowOrigins = []string{
+		"http://localhost:5173",  // Vue.js dev server
+		"https://transfiguration-frontend.vercel.app", // Production frontend
+	}
 	config.AllowCredentials = true
 	r.Use(cors.New(config))
 
 	// Routes
 	r.POST("/api/login", handleLogin)
 
+	// Get port from environment variable or use default
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
 	// Start server
-	if err := r.Run(":8080"); err != nil {
+	if err := r.Run(":" + port); err != nil {
 		log.Fatal("Failed to start server:", err)
 	}
 }
