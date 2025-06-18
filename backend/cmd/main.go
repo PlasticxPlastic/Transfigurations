@@ -2,19 +2,21 @@ package main
 
 import (
 	"log"
-	"os"
+	"net/http"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-contrib/cors"
 	"github.com/transfiguration/internal/database"
 )
 
-func main() {
+var r *gin.Engine
+
+func init() {
 	// Initialize database connection
 	if err := database.InitDB(); err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	r := gin.Default()
+	r = gin.Default()
 
 	// CORS configuration
 	config := cors.DefaultConfig()
@@ -27,17 +29,11 @@ func main() {
 
 	// Routes
 	r.POST("/api/login", handleLogin)
+}
 
-	// Get port from environment variable or use default
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	// Start server
-	if err := r.Run(":" + port); err != nil {
-		log.Fatal("Failed to start server:", err)
-	}
+// Handler is the main entry point for Vercel
+func Handler(w http.ResponseWriter, req *http.Request) {
+	r.ServeHTTP(w, req)
 }
 
 func handleLogin(c *gin.Context) {
