@@ -84,10 +84,14 @@ const username = ref('')
 const password = ref('')
 const error = ref('')
 
+const API_URL = import.meta.env.PROD 
+  ? 'https://transfiguration-backend.vercel.app/api'
+  : 'http://localhost:8080/api'
+
 const handleLogin = async () => {
   try {
     error.value = ''
-    const response = await axios.post('http://localhost:8080/api/login', {
+    const response = await axios.post(`${API_URL}/login`, {
       username: username.value,
       password: password.value
     })
