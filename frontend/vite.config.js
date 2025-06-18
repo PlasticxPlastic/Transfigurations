@@ -13,7 +13,7 @@ export default defineConfig(({ command }) => ({
           ? 'https://backend-redk5og93-ohms-projects-4b3e1e96.vercel.app'
           : 'http://localhost:8080',
         changeOrigin: true,
-        secure: true,
+        secure: false,
         rewrite: (path) => path.replace(/^\/api/, '/api')
       }
     }
