@@ -13,7 +13,10 @@ func init() {
 
 	// CORS configuration
 	config := cors.DefaultConfig()
-	config.AllowAllOrigins = true
+	config.AllowOrigins = []string{
+		"http://localhost:5173",
+		"https://transfiguration1-qu1hr23f2-ohms-projects-4b3e1e96.vercel.app",
+	}
 	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	config.AllowHeaders = []string{
 		"Origin",
@@ -31,6 +34,11 @@ func init() {
 
 	// Add OPTIONS handler for preflight requests
 	r.OPTIONS("/api/login", func(c *gin.Context) {
+		c.Header("Access-Control-Allow-Origin", "https://transfiguration1-qu1hr23f2-ohms-projects-4b3e1e96.vercel.app")
+		c.Header("Access-Control-Allow-Methods", "POST, OPTIONS")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
+		c.Header("Access-Control-Allow-Credentials", "true")
+		c.Header("Access-Control-Max-Age", "86400")
 		c.Status(http.StatusOK)
 	})
 
@@ -40,6 +48,10 @@ func init() {
 
 // Handler is the main entry point for Vercel
 func Handler(w http.ResponseWriter, req *http.Request) {
+	// Add CORS headers for all responses
+	w.Header().Set("Access-Control-Allow-Origin", "https://transfiguration1-qu1hr23f2-ohms-projects-4b3e1e96.vercel.app")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	
 	r.ServeHTTP(w, req)
 }
 
