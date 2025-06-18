@@ -13,7 +13,7 @@ var r *gin.Engine
 func init() {
 	// Initialize database connection
 	if err := database.InitDB(); err != nil {
-		log.Fatal("Failed to connect to database:", err)
+		log.Printf("Failed to connect to database: %v", err)
 	}
 
 	r = gin.Default()
