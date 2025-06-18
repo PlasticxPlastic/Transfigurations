@@ -85,7 +85,7 @@ const password = ref('')
 const error = ref('')
 
 const API_URL = import.meta.env.PROD 
-  ? 'https://transfiguration-backend.vercel.app/api'
+  ? 'https://backend-ifp88by28-ohms-projects-4b3e1e96.vercel.app/api'
   : 'http://localhost:8080/api'
 
 const handleLogin = async () => {

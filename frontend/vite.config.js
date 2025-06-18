@@ -8,12 +8,12 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: process.env.NODE_ENV === 'production' 
-          ? 'https://transfiguration-backend.vercel.app'
+        target: import.meta.env.PROD 
+          ? 'https://backend-ifp88by28-ohms-projects-4b3e1e96.vercel.app'
           : 'http://localhost:8080',
         changeOrigin: true,
         secure: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/^\/api/, '/api')
       }
     }
   },
